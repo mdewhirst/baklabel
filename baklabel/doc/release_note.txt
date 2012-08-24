@@ -4,7 +4,7 @@ baklabel - see Description below
 Version   Build Who  When/What
 ==============================
 
-ver 1.0.3 2728  md  24 Aug 2012 - Code review and tweaks to test importing
+ver 1.0.3 2729  md  24 Aug 2012 - Code review and tweaks to test importing
                     to cater for in-house python path adjustments
 
 ver 1.0.2 2685  md   8 Mar 2011 - Refactored guessdate() out of __main__

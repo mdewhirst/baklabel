@@ -43,7 +43,7 @@ relnote = """baklabel - see Description below
 Version   Build Who  When/What
 ==============================
 
-ver 1.0.3 2728  md  24 Aug 2012 - Code review and tweaks to test importing
+ver 1.0.3 2729  md  24 Aug 2012 - Code review and tweaks to test importing
                     to cater for in-house python path adjustments
 
 ver 1.0.2 2685  md   8 Mar 2011 - Refactored guessdate() out of __main__
@@ -211,11 +211,11 @@ class Grandad(object):
     # See __doc__ = synopsis below
     # making -h help reflect the above defaults - only used in synopsis
     svrname = 'blank'
-    if SERVER_NAME != '':
+    if not SERVER_NAME == '':
         svrname = SERVER_NAME
 
     eoy = 'blank'
-    if EOY_LABEL != '':
+    if not EOY_LABEL == '':
         eoy = EOY_LABEL
 
 
@@ -310,7 +310,7 @@ Options:
                 else:
                     # looks like a date in a string
                     guess = guessdate(backupday)
-                    # if it doesn't crash it is a valid date
+                    # if it crashes the exception is raised in guessdate
                     backupday = guess
             except Exception:
                 pass
@@ -536,6 +536,6 @@ if __name__ == "__main__":
                                weekly_day=weekly_day,
                                 smallhours=smallhours)
         lab = baklab.label()
-        # to stdout
+        # payload to stdout
         print(lab)
 
