@@ -1,0 +1,4 @@
+jgbim.py 0.1.1-2734-py2.7
+
+Source: http://svn.pczen.com.au/repos/pysrc/gpl3/jgbim/distrib/
+

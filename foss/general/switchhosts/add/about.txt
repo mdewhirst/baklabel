@@ -1,0 +1,9 @@
+Livesite and Testsite - programs to adjust the hosts file to
+switch between a live site and a test site
+
+Source:
+http://svn.pczen.com.au/repos/pysrc/gpl3/general/switchhosts
+Userid = 'public' without password.
+
+Mike Dewhirst
+0411 704 143

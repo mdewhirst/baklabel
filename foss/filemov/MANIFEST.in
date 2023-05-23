@@ -1,0 +1,4 @@
+include README.txt
+recursive-include filemov *.py
+recursive-include filemov\test *.py
+recursive-include filemov\doc *.txt

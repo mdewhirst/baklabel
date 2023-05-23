@@ -1,0 +1,392 @@
+REM  ***** miked for project Shorts ******* 2007
+rem - If you are a member of administrators AND a member of other
+rem - groups you get the other groups stuff but inserted into
+rem - dirs named after the group. This lets administrators see
+rem - what each user might be getting thanks to membership of
+rem - that particular group. Non-admins get all their shortcuts
+rem - directly in I:\Shorts folder no matter how many groups they
+rem - are in. Only admins get a separate folder per group
+rem -
+rem - Mar 2011 miked changed give single batch file using environment
+rem - variables and improved performance for WAN operations
+rem -
+rem - 2010 miked changed to account for central --> central.mcm
+rem - replaced .o=central with .ou=central.o=mcm
+rem -
+rem - groups were relocated. This adjustment really needs to be
+rem - refactored in future (post-NBN) so it works for *.mcm
+
+REM Map an I: drive for the WTS user. CENTRAL USERS ALREADY HAVE I: DRIVE
+rem - this needs to be refactored to ONLY map I: if the login context is central
+
+IF LOGIN_CONTEXT<>"central"  and LOGIN_CONTEXT<>"central.mcm"  THEN BEGIN
+  IF P_STATION="00145ED7EEEA"  then MAP ROOT I:=MCM_MAIN_SRV/DATA:WTSUSERS\%1
+END
+
+write "LOGIN_CONTEXT = " ; LOGIN_CONTEXT
+write "LOGIN_ALIAS_CONTEXT = " ; LOGIN_ALIAS_CONTEXT
+
+rem **** miked reserves V: for shorts groups directories ****
+
+MAP ROOT V:=MCM_MAIN_SRV/DATA:groups
+
+rem ******************* edit nothing above ********************
+
+REM  ***** miked for project Shorts ******* 2007
+rem - If member of administrators and a member of other groups
+rem - you get the other groups stuff but inserted into directories
+rem - named after the group. This lets administrators see
+rem - what each user might be getting due to membership of
+rem - that particular group. This only happens at Central.
+rem - adjusted by miked to account for central --> central.mcm
+rem - replaced .o=central with .ou=central.o=mcm
+rem - groups were relocated. This adjustment really needs to be
+rem - refactored in future (post-NBN) so it works for *.mcm
+rem - Non-admins get all their shortcuts directly in I:\Shorts folder no
+rem - matter how many groups they are in. Only admins get a separate folder
+rem - per group - except for their own stuff which goes to i:\shorts
+
+REM Map an I: drive for the WTS user. CENTRAL USERS ALREADY HAVE I: DRIVE
+rem - this needs to be refactored to ONLY map I: if the login context is central
+
+IF LOGIN_CONTEXT<>"central"  and LOGIN_CONTEXT<>"central.mcm"  THEN BEGIN
+  IF P_STATION="00145ED7EEEA"  then MAP ROOT I:=MCM_MAIN_SRV/DATA:WTSUSERS\%1
+END
+
+write "LOGIN_CONTEXT = " ; LOGIN_CONTEXT
+write "LOGIN_ALIAS_CONTEXT = " ; LOGIN_ALIAS_CONTEXT
+
+rem **** miked reserves V: for shorts groups directories ****
+
+MAP ROOT V:=MCM_MAIN_SRV/DATA:groups
+
+SET abi_juvenile_justice=""
+IF MEMBER OF ".cn=abi_juvenile_justice.ou=central.o=mcm" THEN BEGIN
+  SET abi_juvenile_justice="yes"
+END
+
+SET abi_statewide_case_mgt=""
+IF MEMBER OF ".cn=abi_statewide_case_mgt.ou=central.o=mcm" THEN BEGIN
+  SET abi_statewide_case_mgt="yes"
+END
+
+SET abi_statewide_paediatrics=""
+IF MEMBER OF ".cn=abi_statewide_paediatrics.ou=central.o=mcm" THEN BEGIN
+  SET abi_statewide_paediatrics="yes"
+END
+
+SET acquired_brain_injury=""
+IF MEMBER OF ".cn=acquired_brain_injury.ou=central.o=mcm" THEN BEGIN
+  SET acquired_brain_injury="yes"
+END
+
+SET administrators=""
+IF MEMBER OF ".cn=administrators.ou=central.o=mcm" THEN BEGIN
+  SET administrators="yes"
+#\\Mcm_main_srv\SYS\PUBLIC\shorts\admin_login.bat Mcm_main_srv\SYS\PUBLIC Administrators
+END
+
+SET affirming_families=""
+IF MEMBER OF ".cn=affirming_families.ou=central.o=mcm" THEN BEGIN
+  SET affirming_families="yes"
+END
+
+SET bridges=""
+IF MEMBER OF ".cn=bridges.ou=central.o=mcm" THEN BEGIN
+  SET bridges="yes"
+END
+
+SET bridges_services=""
+IF MEMBER OF ".cn=bridges_services.ou=central.o=mcm" THEN BEGIN
+  SET bridges_services="yes"
+END
+
+SET braybrook_maidstone_yp=""
+IF MEMBER OF ".cn=braybrook_maidstone_yp.ou=central.o=mcm" THEN BEGIN
+  SET braybrook_maidstone_yp="yes"
+END
+
+SET business_development=""
+IF MEMBER OF ".cn=business_development.ou=central.o=mcm" THEN BEGIN
+  SET business_development="yes"
+END
+
+SET business_development_project=""
+IF MEMBER OF ".cn=business_development_project.ou=central.o=mcm" THEN BEGIN
+  SET business_development_project="yes"
+END
+
+SET cfam=""
+IF MEMBER OF ".cn=cfam.ou=central.o=mcm" THEN BEGIN
+  SET cfam="yes"
+END
+
+SET ciao=""
+IF MEMBER OF ".cn=ciao.ou=central.o=mcm" THEN BEGIN
+  SET ciao="yes"
+END
+
+SET children_and_disability=""
+IF MEMBER OF ".cn=children_and_disability.ou=central.o=mcm" THEN BEGIN
+  SET children_and_disability="yes"
+END
+
+SET cognos_users=""
+IF MEMBER OF ".cn=cognos_users.ou=central.o=mcm" THEN BEGIN
+  SET cognos_users="yes"
+END
+
+SET committee_ict=""
+IF MEMBER OF ".cn=committee_ict.ou=central.o=mcm" THEN BEGIN
+  SET committee_ict="yes"
+END
+
+SET community_access_program=""
+IF MEMBER OF ".cn=community_access_program.ou=central.o=mcm" THEN BEGIN
+  SET community_access_program="yes"
+END
+
+SET community_development=""
+IF MEMBER OF ".cn=community_development.ou=central.o=mcm" THEN BEGIN
+  SET community_development="yes"
+END
+
+SET community_friend=""
+IF MEMBER OF ".cn=community_friend.ou=central.o=mcm" THEN BEGIN
+  SET community_friend="yes"
+
+END
+
+SET creating_connections=""
+IF MEMBER OF ".cn=creating_connections.ou=central.o=mcm" THEN BEGIN
+  SET creating_connections="yes"
+END
+
+SET crisis_accommodation=""
+IF MEMBER OF ".cn=crisis_accommodation.ou=central.o=mcm" THEN BEGIN
+  SET crisis_accommodation="yes"
+END
+
+SET disability_case_mgt_services=""
+IF MEMBER OF ".cn=disability_case_mgt_services.ou=central.o=mcm" THEN BEGIN
+  SET disability_case_mgt_services="yes"
+END
+
+SET disability_services=""
+IF MEMBER OF ".cn=disability_services.ou=central.o=mcm" THEN BEGIN
+  SET disability_services="yes"
+END
+
+SET eet_support=""
+IF MEMBER OF ".cn=eet_support.ou=central.o=mcm" THEN BEGIN
+  SET eet_support="yes"
+END
+
+SET family_reconciliation_mediation=""
+IF MEMBER OF ".cn=family_reconciliation_mediation.ou=central.o=mcm" THEN BEGIN
+  SET family_reconciliation_mediation="yes"
+END
+
+SET frontyard=""
+IF MEMBER OF ".cn=frontyard.ou=central.o=mcm" THEN BEGIN
+  SET frontyard="yes"
+END
+
+SET horn_of_africa=""
+IF MEMBER OF ".cn=horn_of_africa.ou=central.o=mcm" THEN BEGIN
+  SET horn_of_africa="yes"
+END
+
+SET ict_projects=""
+IF MEMBER OF ".cn=ict_projects.ou=central.o=mcm" THEN BEGIN
+  SET ict_projects="yes"
+END
+
+SET incident_rs=""
+IF MEMBER OF ".cn=incident_rs.ou=central.o=mcm" THEN BEGIN
+  SET incident_rs="yes"
+END
+
+SET incident_rs_dev=""
+IF MEMBER OF ".cn=incident_rs_dev.ou=central.o=mcm" THEN BEGIN
+  SET incident_rs_dev="yes"
+END
+
+SET jpet=""
+IF MEMBER OF ".cn=jpet.ou=central.o=mcm" THEN BEGIN
+  SET jpet="yes"
+END
+
+SET kitchen_culture=""
+IF MEMBER OF ".cn=kitchen_culture.ou=central.o=mcm" THEN BEGIN
+  SET kitchen_culture="yes"
+END
+
+SET mcm_database=""
+IF MEMBER OF ".cn=mcm_database.ou=central.o=mcm" THEN BEGIN
+  SET mcm_database="yes"
+END
+
+SET melb_case_management=""
+IF MEMBER OF ".cn=melb_case_management.ou=central.o=mcm" THEN BEGIN
+  SET melb_case_management="yes"
+END
+
+SET melb_gateway_reconnect=""
+IF MEMBER OF ".cn=melb_gateway_reconnect.ou=central.o=mcm" THEN BEGIN
+  SET melb_gateway_reconnect="yes"
+END
+
+SET my_future_choice=""
+IF MEMBER OF ".cn=my_future_choice.ou=central.o=mcm" THEN BEGIN
+  SET my_future_choice="yes"
+END
+
+SET myss_grp=""
+IF MEMBER OF ".cn=myss_grp.0=central" THEN BEGIN
+  SET myss_grp="yes"
+END
+
+SET neighbour-ring=""
+IF MEMBER OF ".cn=neighbour-ring.0=central" THEN BEGIN
+  SET neighbour-ring="yes"
+END
+
+SET open_access=""
+IF MEMBER OF ".cn=open_access.ou=central.o=mcm" THEN BEGIN
+  SET open_access="yes"
+END
+
+SET parenting_in_partnership=""
+IF MEMBER OF ".cn=parenting_in_partnership.ou=central.o=mcm" THEN BEGIN
+  SET parenting_in_partnership="yes"
+END
+
+SET personal_support=""
+IF MEMBER OF ".cn=personal_support.ou=central.o=mcm" THEN BEGIN
+  SET personal_support="yes"
+END
+
+SET residential_services=""
+IF MEMBER OF ".cn=residential_services.ou=central.o=mcm" THEN BEGIN
+  SET residential_services="yes"
+END
+
+SET respite=""
+IF MEMBER OF ".cn=respite.ou=central.o=mcm" THEN BEGIN
+  SET respite="yes"
+END
+
+SET riskybiz=""
+IF MEMBER OF ".cn=riskybiz.ou=central.o=mcm" THEN BEGIN
+  SET riskybiz="yes"
+END
+
+SET sceec=""
+IF MEMBER OF ".cn=sceec.ou=central.o=mcm" THEN BEGIN
+  SET sceec="yes"
+END
+
+SET sceec_staff=""
+IF MEMBER OF ".cn=sceec_staff.ou=central.o=mcm" THEN BEGIN
+  SET sceec_staff="yes"
+END
+
+SET school_focused_youth=""
+IF MEMBER OF ".cn=school_focused_youth.ou=central.o=mcm" THEN BEGIN
+  SET school_focused_youth="yes"
+END
+
+SET statewide_abi_case_mgt=""
+IF MEMBER OF ".cn=statewide_abi_case_mgt.ou=central.o=mcm" THEN BEGIN
+  SET statewide_abi_case_mgt="yes"
+END
+
+SET statewide_abi_paediatrics=""
+IF MEMBER OF ".cn=statewide_abi_paediatrics.ou=central.o=mcm" THEN BEGIN
+  SET statewide_abi_paediatrics="yes"
+END
+
+SET step_ahead=""
+IF MEMBER OF ".cn=step_ahead.ou=central.o=mcm" THEN BEGIN
+  SET step_ahead="yes"
+END
+
+SET step_ahead_staff=""
+IF MEMBER OF ".cn=step_ahead_staff.ou=central.o=mcm" THEN BEGIN
+  SET step_ahead_staff="yes"
+END
+
+SET stopover=""
+IF MEMBER OF ".cn=stopover.ou=central.o=mcm" THEN BEGIN
+  SET stopover="yes"
+END
+
+SET tenders=""
+IF MEMBER OF ".cn=tenders.ou=central.o=mcm" THEN BEGIN
+  SET tenders="yes"
+END
+
+SET tutoring=""
+IF MEMBER OF ".cn=tutoring.ou=central.o=mcm" THEN BEGIN
+  SET tutoring="yes"
+END
+
+SET website_test=""
+IF MEMBER OF ".cn=website_test.ou=central.o=mcm" THEN BEGIN
+  SET website_test="yes"
+END
+
+SET western_ypin=""
+IF MEMBER OF ".cn=western_ypin.ou=central.o=mcm" THEN BEGIN
+  SET western_ypin="yes"
+END
+
+SET wheels=""
+IF MEMBER OF ".cn=wheels.ou=central.o=mcm" THEN BEGIN
+  SET wheels="yes"
+END
+
+SET wrap=""
+IF MEMBER OF ".cn=wrap.ou=central.o=mcm" THEN BEGIN
+  SET wrap="yes"
+END
+
+SET youth_eet_initiative=""
+IF MEMBER OF ".cn=youth_eet_initiative.o=" THEN BEGIN
+  SET youth_eet_initiative="yes"
+END
+
+SET youth_advisory_group=""
+IF MEMBER OF ".cn=youth_advisory_group.ou=central.o=mcm" THEN BEGIN
+  SET youth_advisory_group="yes"
+END
+
+SET youth_enterprise_hub=""
+IF MEMBER OF ".cn=youth_enterprise_hub.ou=central.o=mcm" THEN BEGIN
+  SET youth_enterprise_hub="yes"
+END
+
+SET youth_homelessness=""
+IF MEMBER OF ".cn=youth_homelessness.ou=central.o=mcm" THEN BEGIN
+  SET youth_homelessness="yes"
+END
+
+SET youth_transitions=""
+IF MEMBER OF ".cn=youth_transitions.ou=central.o=mcm" THEN BEGIN
+  SET youth_transitions="yes"
+END
+
+SET yw_crisis_service=""
+IF MEMBER OF ".cn=yw_crisis_service.ou=central.o=mcm" THEN BEGIN
+  SET yw_crisis_service="yes"
+END
+
+rem ******************* edit nothing below ********************
+
+#\Mcm_main_srv\SYS\PUBLIC\shorts\group_login.bat
+
+MAP DISPLAY ON
+MAP ERRORS ON
+
+EXIT

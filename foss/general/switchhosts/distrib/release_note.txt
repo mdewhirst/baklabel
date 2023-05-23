@@ -1,0 +1,36 @@
+livesite and testsite
+
+livesite switches the test website back to the live site.
+
+livesite checks the hosts file for the existence of entries for the test
+website. If they exist the file gets re-written without them.
+
+testsite switches the live website back to the test site.
+
+testsite checks the hosts file for the existence of entries for the test
+website. If they exist nothing happens. If not, test site entries are added.
+
+Additionally (Windows only) testsite will execute (if it exists) a batch file
+called 'proxy_remove.bat'. This exists in the same directory under a different
+name 'proxy_remove_example.bat' as a precaution against unexpected execution.
+See also two registry patch files in the same directory, similarly mis-named.
+To make these work as expected edit both the content and names as desired.
+
+When the test website goes live, it becomes the live site and livesite
+should be run again finally so that the hosts file is no longer used to
+find the website. By itself this proves that the DNS has been updated.
+
+The source versions of livesite and testsite trigger an anti-virus warning
+because they edit a system file. Just dismiss the warnings - provided they
+occur exactly when you run one of these programs.
+
+Version   Build Who When/What
+
+rev 0.3.1 2722  md  14 Nov 2011 - rewrite xping.bat and rejig for line.example
+rev 0.3.0 2705  md  27 Oct 2011 - reworked for addresses in ./lines.whatever
+                                  and Popen to keep the batch pause on-screen
+rev 0.2.1 2657  md  21 Oct 2010 - ensured file ends with 
+
+rev 0.2.0 2656  md  21 Oct 2010 - added registry edit to disable proxy
+rev 0.1.0 2653  md  18 Oct 2010 - First written.
+

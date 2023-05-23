@@ -1,0 +1,33 @@
+Please print this for future reference (Windows only)
+======================================
+
+Livesite and Testsite
+
+When you want to look at the test site, execute testsite.exe. Similarly,
+when you wish to look at the live site, execute livesite.exe.
+
+After installation look in the "Switch" folder on your desktop or wherever
+you installed it for a file called line.example.
+
+* rename or copy line.example to lines.<yourdomain>
+
+* edit the lines file to reflect the IP address and domain name for testing
+
+Note: If you don't have a file called lines.<something> nothing will happen.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Note: Because of browser cache issues it would be best to compare the test
+site with browsers on one computer and the old live site with browsers running
+on an adjacent computer.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+After the test site goes live, execute livesite.exe again for the last
+time. You should not then be seeing the old live site but if you are then
+please report that as a DNS bug.
+
+Don't hesitate to ask for help
+
+Mike Dewhirst
+0411 704 143

@@ -1,0 +1,20 @@
+Same file set of 444 files totalling 8,109,969 copy-overwrite from one network location to
+another network location - so there is a fair bit of network processing happening and likely
+not too much on the workstation. No profiling has been done.
+
+sleep   config
+secs    YIELD | run1    cpu   | run2    cpu   | run3    cpu   | run4    cpu   | run5    cpu   |
+              |               |               |               |               |               |
+None          | 18.337, av35% | 18.370, av35% | 18.166, av35% | 20.124, av35% | 18.572, av35% |
+0.000    0    | 18.421, av35% | 19.143, av35% | 20.254, av35% | 18.860, av35% | 18.841, av35% |
+0.001    0.1  | 23.028, av25% | 22.727, av25% | 22.708, av25% | 23.646, av25% | 24.257, av25% |
+0.005    0.5  | 23.649, av23% | 24,444, av24% | 23.086, av23% | 23.687, av23% | 23.505, av23% |
+0.010    1    | 23.871, av22% | 23.796, av22% | 23.011, av23% | 24.374, av22% | 24.782, av22% |
+0.020    2    | 30.268, av18% | 28.810, av18% | 29.272, av18% | 30.656, av18% | 30.183, av20% |
+0.040    4    | 36.033, av15% | 35.937, av15% | 36.193, av15% | 35.869, av15% | 35.752, av15% |
+0.080    8    | 57.086, av10% | 57.690, av10% | 56.791, av10% | 57.639, av10% | 57.693, av10% |
+0.160   16    | 93.595, av7%  | 92.776, av7%  |               |               |               |
+
+The None figures come from before the code was changed. There is no discernable difference
+between running sleep() and sleep(0) and not having sleep in the code. Likewise there is no
+discernable difference if a test is introduced if YIELD > 0 when YIELD is zero.

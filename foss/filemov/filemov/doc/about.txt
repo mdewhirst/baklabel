@@ -1,0 +1,7 @@
+filemov.py 1.1.1-2728-py2.7
+
+Source:  Userid is 'public' with no password.
+http://svn.pczen.com.au/repos/pysrc/gpl3/filemov/distrib/
+
+Mike Dewhirst
+miked@dewhirst.com.au

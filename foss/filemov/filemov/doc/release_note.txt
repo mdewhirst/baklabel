@@ -1,0 +1,169 @@
+filemov - see below for description
+=======
+
+Version   Build Who When/What
+=============================
+todo                - Add command line arg to use different settings.conf
+                    which requires all args to be part of a settings object
+
+This means program flow will be ...
+
+1. parse the argv for a named settings.conf file
+   - if no file is there use the default conf from cwd
+   - save the settings used in cwd WITH A LOUD TOP LINE of saved pathname
+2. create an object with all the settings from the named conf
+3. pass the object into filemov
+4. launch the log for review
+5. launch the named settings.conf for editing
+
+
+                    - GUI interface for settings adjustments
+                    - use compression for optional zip/tar.gz output
+
+ver 1.1.1 2728  md  24 Aug 2012 - Code review and tweaks to test importing
+                    to cater for in-house python path adjustments
+
+ver 1.1.0 2683  md  18-Jan-2011 - refactored to use a settings object
+                    to have the ability to use named settings files.
+                    Changed YIELD to SNOOZE to avoid syntax highlighting
+                    from using the python 'yield' word
+
+Happy new year  md  Must lose some weight!
+
+ver 1.0.0 2670  md  3 Nov 2010 - Enhanced to do case sensitive file
+                    exclusions in non-Windows environments. In production.
+
+ver 0.8.0 2650  md  11 Oct 2010 - Feature to import a generated label from
+                    baklabel .py to include a grandfather element to the
+                    destination path for the filemov'd files. Also, from
+                    __future__ import print_function
+
+ver 0.7.3 2631  md  14 may 2010 - added the list of skipthis.dir exclusions
+                    to the end of the log for ease of checking afterwards.
+
+ver 0.7.2 2630  md  6 may 2010 - repaired silent behaviour on Windows 2003
+                    terminal server when it should be noisy.
+
+ver 0.7.1 2626  md  27 apr 2010 - repaired dest_suffix bug which was chopping
+                    off the leading character if shortening a windows root dir.
+                    See unit test #65
+
+ver 0.7.0 2625  md  26 apr 2010 - added new action move-remove-empty-folders
+
+ver 0.6.1 2624  md  22 apr 2010 - added -q option to switch off screen I/O
+
+ver 0.6.0 2623  md  20 apr 2010 - permit a wildcard * asterisk to operate
+                    only on particular file name patterns.
+
+ver 0.5.5 2622  md  11 apr 2010 - establish the current time once-only in
+                    __init__() rather than repeatedly in is_candidate()
+                    Refactored lightly and improved inline comments
+
+ver 0.5.4 2608  md  4 mar 2010 - added skipsilent feature to provide a
+                    choice as to whether skipped directories are logged
+                    or not
+
+ver 0.5.3 2607  md  3 mar 2010 - added skipthis.dir feature to permit
+                    exclusion of directories by leaving a specially named
+                    file lying around in the directory to be avoided
+
+ver 0.5.2 2600  md  13 feb 2010 - adjust embedded settings.conf to work
+                    under Linux with forward slashes and also include as
+                    docstring in settings.py.
+
+ver 0.5.1 2596  md  3 feb 2010 - insert the original settings.conf (ie the
+                    factory defaults) into settings.py as the docstring and
+                    only write it out if the settings.py file does not
+                    exist. This permits updates without overwriting any
+                    pre-existing settings. Adjusted logfile location to
+                    current working dir if the startin dir is invalid.
+
+ver 0.5.0 2593  md  2 feb 2010 - give log file a date-computed filename
+                    and permit DESTINATION as a log folder. Also write out
+                    the settings used alongside the log using the computed
+                    filename. If the log and settings files exist in the
+                    destination they get backed up with a trailing tilde.
+                    Added finish time to the run to keep track of 'sleep'
+                    impact on cpu. Added SNOOZE user setting to control
+                    impact of 'sleep'.
+
+ver 0.4.0 2592  md  28 jan 2010 - added error collection to be appended to
+                    the normal log on completion. Reformatted times to have
+                    leading zeros for single digits.
+
+ver 0.3.3 2589  md  26 jan 2010 - catch trapped exception and filename for
+                    log and added comma formatted totalsize, filecount.
+                    Trapped file stat size date and Windows name errors
+                    Trapped no date ValueError exception. Added file-size
+                    and file-date to log. Changed date format to Australian
+
+ver 0.2.1 2581  md  25 jan 2010 - repaired makedirs bug in settings.py and
+                    added ' + past' to every test case with a cutoff value
+                    so that when running tests you only need to increment
+                    the past value in one place at the top of the suite to
+                    make date based tests work. Included release_note.txt.
+
+ver 0.2.0 2573  md  20 jan 2010 - Added 'SHORTEN' option for dest paths
+
+ver 0.1.0 2571  md  13 jan 2010 - moved STARTIN testing out of settings.py
+                    to here, added action = report-make-folders option,
+                    cleaned up the 'directory visited' reporting and
+                    included self.printing so output can be switched off
+                    during unit tests.
+
+ver 0.0.1       md  2 jan 2010 - improved time formatting and Win paths
+
+ver 0.0.0       md  1 jan 2010 - first written
+
+
+Description
+===========
+filemov copies or moves 'x days old' files into other dirs as per
+configured strategy. It is easy to use without mistakes.
+
+1. Run filemov the first time to produce a fully commented set of
+configuration settings called settings.conf. These are reproduced
+at any time by deleting settings.conf and re-running filemov.
+
+2. Edit settings.conf to suit your requirements and run filemov.
+
+3. Examine the report to prove filemov did what you expected.
+
+Features
+
+- unclutter named dir using year-labelled subdirs for old files
+- unclutter first-level dirs only with year-subdirs for old files
+- copy/move whole directory tree
+- copy, move, report-only, report-only + make-dirs
+- report includes total file size and time taken plus each action
+- destination tree can be auto-date-labelled for grandfathering
+- exclude files by pattern
+- exclude directories by pattern
+- exclude directories by (skipthis.dir) flag
+- automatically displays report on completion
+- automatically re-presents settings.conf in system editor
+
+Source:  Userid is 'public' with no password.
+http://svn.pczen.com.au/repos/pysrc/gpl3/filemov/distrib/
+
+Mike Dewhirst
+miked@dewhirst.com.au
+
+
+License
+=======
+Copyright (C) 2010 Mike Dewhirst
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+

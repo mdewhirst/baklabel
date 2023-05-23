@@ -1,0 +1,3 @@
+Unzip to a convenient location where you can run the
+program. It will be unzipped to C:\climate\filemov
+unless you change that at the next prompt.

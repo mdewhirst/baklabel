@@ -1,0 +1,84 @@
+filemov gui requirements
+
+Target audience:
+
+1. Untrained user who is unfamiliar with filemov because she hasn't used
+it for a while.
+
+Environment:
+
+2. Cross-platform. Mac, Linux, Windows
+
+
+Technology:
+
+3. wxPython
+
+
+Functional design discussion:
+
+4. Filemov command-line version operates by reading settings.conf to get
+its riding instructions.
+
+5. The primary requirement for the gui is to prevent users from breaking
+settings.conf
+
+6. Gui establishes settings for filemov object to run
+    - root              - any valid directory
+    - cutoff            - days old before today/now (consider bounds)
+    - detect            - accessed, created or modified
+    - action            - copy, copy-overwrite, move, report or
+                          report-make-folders
+    - cleanup           - True or False
+    - destination       - year, sub-year (relative to root) or a valid path
+    - exclude_dirs      - list of directory name fragments
+    - exclude_files     - list of filename fragments
+    - logname           - valid path and desired filename
+    - overwrite_log     - True or False
+
+7. Launch filemov with those settings
+
+8. Display progress
+
+9. Display a success message
+
+10. Optionally open the log
+
+
+User interface design discussion
+
+11. Upon launch, display the different settings. It may be appropriate to
+use tabbed pages so there is enough room for on-screen prompts wordy enough
+to make sense.
+
+12. If tabbed pages are used the default page might be the page last viewed?
+
+13. There should be [Help], [Cancel], [Apply], [Report] and [Execute] buttons
+permanently visible below the tabbed pages but enabled or disabled according
+to circumstances.
+
+14. [Help] displays instructions or docco - always enabled.
+
+15. [Cancel] means abandon changes (excluding any saved/applied changes?) and
+exit - always enabled.
+
+16. [X] in the corner is the same as [Cancel]
+
+17. [Apply] means save settings so far. Enabled only when a setting has been
+changed then disabled when clicked and the save was successful. Display an
+appropriate error message if unsuccessful and remain enabled.
+
+18. [Report] means save all changed settings (like [Apply]) then run the
+program except temporarily supplying "action = report" instead of the
+saved/displayed "action".
+
+19. [Execute] means save all changed settings (like [Apply]) then run the
+program.
+
+20. On completion display the log/report
+
+21. Menu options (eg File, Edit, Window and Help) need discussion. For
+example, the minimum File option is 'Close' and Help 'About' should include
+the link to obtain source from the repository. Help 'Licence' should display
+the GPL3 licence.
+

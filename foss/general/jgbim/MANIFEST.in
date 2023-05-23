@@ -1,0 +1,4 @@
+include README.txt
+recursive-include jgbim *.py
+recursive-include jgbim\test *.py
+recursive-include jgbim\doc *.txt
