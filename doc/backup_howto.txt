@@ -82,10 +82,7 @@ Install Python
 --------------
 If you don't already have Python 2.x or 3.x on your machine, download and install Python 2.7 from http://www.python.org  It should all work fine with versions earlier than 2.7 and also Python 3.x but that hasn't been tested. There is a vast amount of software available for Python 2.x but not yet a lot for 3.x. Version 2.7 has been officially flagged as being the last 2.x and will be supported for a very long time.
 
-Install baklabel
-----------------
-With the userid 'public' and no password, download and install baklabel from
-http://svn.pczen.com.au/repos/pysrc/gpl3/baklabel/distrib/
+pip install baklabel
 
 Install a large portable disk drive
 -----------------------------------
@@ -111,22 +108,22 @@ and paste the following few lines (with or without the # lines):
 #########################################################
 import baklabel                                         # 1
 baklab = baklabel.Grandad()                             # 2
-baklabcmd = '%s %s' % ('backup.bat', baklab.label())    # 3
+baklabcmd = '{backup.bat} {baklab.label()}'             # 3
 import os                                               # 4
 os.system(baklabcmd)                                    # 5
 #########################################################
 
 Here are some numbered notes on backup.py. Skip them if you have no interest.
 
-# 1. import baklabel imports the baklabel module installed in the first preparation step and gives this backup.py script direct access to the python code which calculates the correct backup label.
+1. import baklabel imports the baklabel module installed in the first preparation step and gives this backup.py script direct access to the python code which calculates the correct backup label.
 
-# 2. baklab = baklabel.Grandad() is python code which creates an object called baklab (it could be called anything) having all the capabilities set up in the Grandad() class inside the baklabel module installed earlier.
+2. baklab = baklabel.Grandad() is python code which creates an object called baklab (it could be called anything) having all the capabilities set up in the Grandad() class inside the baklabel module installed earlier.
 
-# 3. baklabcmd = <some hieroglyphics> is just creating a command line to run the backup. The %s symbols get replaced with 'backup.bat' and whatever the label() method of baklab delivers - let's say 'mon' if today is Monday (after 4am of course). Then baklabcmd becomes "backup.bat mon".
+3. baklabcmd = <some hieroglyphics> is just creating a command line to run the backup. The curly brackets content get replaced with 'backup.bat' and whatever the label() method of baklab delivers - let's say 'mon' if today is Monday (after 4am of course). Then baklabcmd becomes "backup.bat mon".
 
-# 4. import os is python code which imports the os module. This is part of Python which figures out which operating system you are running (eg., Windows, Mac, Linux etc) so that the next line works properly.
+4. import os is python code which imports the os module. This is part of Python which figures out which operating system you are running (eg., Windows, Mac, Linux etc) so that the next line works properly.
 
-# 5. os.system(baklabcmd) is just like typing "backup.bat mon" at a command prompt. It calls the operating system to execute the command.
+5. os.system(baklabcmd) is just like typing "backup.bat mon" at a command prompt. It calls the operating system to execute the command.
 
 
 Create your preferred backup.bat
