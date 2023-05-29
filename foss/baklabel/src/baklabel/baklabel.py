@@ -1,7 +1,7 @@
-from __future__ import print_function
-
+# -*- coding: utf-8 -*-
+# Copyright (c) 2011-2023 Climate Pty Ltd
 longdesc = """
-baklabel is designed for use in automated scripts to deliver a sensible
+Baklabel is intended for use in automated scripts to deliver a sensible
 directory path fragment (or label) each day to construct a grandfathered
 local backup destination. It can also be run as a stand-alone utility to
 find the backup label produced for any given date and set of options.
@@ -10,7 +10,7 @@ Run  baklabel.py -h  to see command line usage options.
 
 Call baklabel directly or import it and produce labels from your code.
 
-Python 2.6, 2.7 and 3.x
+Python 2.7 and 3.x
 
 In the docs directory after installing, see release_note.txt for more
 detail on the package, instructions.txt for baklabel output examples and
@@ -31,7 +31,9 @@ data which has been compromised at some unknown point in the past.
 
 source = """
 Source:  Userid is 'public' with no password.
-http://svn.pczen.com.au/repos/pysrc/gpl3/baklabel/distrib/
+https://svn.climate.com.au/repos/pysrc/foss/baklabel/distrib/
+
+(That may change to github shortly)
 
 Mike Dewhirst
 miked@dewhirst.com.au
@@ -40,39 +42,43 @@ miked@dewhirst.com.au
 relnote = """baklabel - see Description below
 ========
 
-Version   Build Who  When/What
+Version  Build Who  When/What
 ==============================
 
-ver 0.0.0a 2640  md  1 jul 2010 - first written
+ver 1.2.0   md  29 May 2023 - Improve guessdate() to resolve ambiguous dates
 
-ver 0.1.0b 2646  md  8 oct 2010 - Added -d numeric option for setting
-                     the label to x days ago. Eg., -1 = yesterday. Also
-                     added a time trigger option in the -d switch such
-                     that, for example, -d 3am will produce yesterday's
-                     label if baklabel is called prior to 3am
+ver 1.1.0   md  23 May 2023 - Change from GPL3 to MIT license, change to pyproject.toml
+                and clean up strings using f-strings
 
-ver 0.2.0 2664  md   27 oct 2010 - Help now respects defaults which have
-                     been adjusted in the source code. A new default now
-                     permits adjustment of new_year_month which sets the
-                     end-of-year label to any desired month.
 
-ver 1.0.0 2670  md   3 Nov 2010 - New option to append current year to
-                     any month-end label, not just end-of-year.
+ver 1.0.3   md  24 Aug 2012 - Code review and tweaks to test importing to cater for
+                in-house python path adjustments
 
-ver 1.0.1 2671  md   4 Nov 2010 - Minor refactoring and tidying comments
+ver 1.0.2   md  8 Mar 2011 - Refactored guessdate() out of __main__ to permit string
+                dates as a calling convenience
 
-ver 1.0.2 2685  md   8 Mar 2011 - Refactored guessdate() out of __main__
-                     to permit string dates as a calling convenience
-ver 1.0.3 2729  md   24 Aug 2012 - Code review and tweaks to test importing
-                     to cater for in-house python path adjustments
+ver 1.0.1   md  4 Nov 2010 - Minor refactoring and tidying comments
 
+ver 1.0.0   md  3 Nov 2010 - New option to append current year to any month-end label,
+                not just end-of-year.
+
+ver 0.2.0   md  27 oct 2010 - Help now respects defaults which have been adjusted in
+                the source code. A new default now permits adjustment of new_year_month
+                which sets the end-of-year label to any desired month.
+
+ver 0.1.0b   md 8 oct 2010 - Added -d numeric option for setting the label to x days
+                ago. Eg., -1 = yesterday. Also added a time trigger option in the -d
+                switch such that, for example, -d 3am will produce yesterday's label
+                if baklabel is called prior to 3am
+
+ver 0.0.0a   md 1 jul 2010 - first written
 
 
 Description
-===========%s
+==========={0}
 
 Grandfathered Backups
-=====================%s
+====================={1}
 Each of the regular weekday Sat to Thu backups will be overwritten seven
 days later. However, if an end-of-month occurs on that weekday the month-
 end backup will happen instead and the weekday backup will survive for an
@@ -132,38 +138,45 @@ then edit the WEEKLY_DAY value to represent a different day of the week.
 If you want to live dangerously you could make WEEKLY_DAY greater than or
 equal to 7 and skip saving week-at-a-time backups. Not recommended.
 
-%s
+{2}
 
 
 License
 =======
-Copyright 2010 Mike Dewhirst
+Copyright (c) 2023 Climate Pty Ltd
 
-This program is free software: you can redistribute it and/or modify it
-under the terms of the GNU Library or Lesser General Public License (LGPL)
-as published by the Free Software Foundation.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-This program is distributed in the hope that it will be useful, but WITHOUT
-ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-more details.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-You should have received a copy of the GNU General Public License and the
-GNU Library or Lesser General Public License along with this program.  If
-not, see <http://www.gnu.org/licenses/>.
-""" % (longdesc, longerdesc, source)
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+""".format(longdesc, longerdesc, source)
 
 __doc__ = relnote
 
+import argparse
 from datetime import date, datetime
 
-# All upper-case words below from SERVER_NAME to SMALLHOURS are intended as
+# All upper-case words below from SERVER_PREFIX to SMALLHOURS are intended as
 # program constants. They are actually default values and may be edited at
 # your convenience after a particular installation. Once edited they should
 # be regarded as constants where they appear in the ensuing code.
 
 # prefix all backup labels - perhaps the name of the server being backed up
-SERVER_NAME = ''
+SERVER_PREFIX = ''
 
 # end-of-year is Dec 31, new year's eve: NEW_YEAR_MONTH == 1 == January
 NEW_YEAR_MONTH = 1
@@ -188,8 +201,29 @@ SMALLHOURS = 4
 # if the backup starts before SMALLHOURS am then use yesterday's label
 # otherwise use today's label
 
-def guessdate(dstr):
-    # now conjure/guess a date from a string
+
+def detect_system_date_format():
+    import locale
+    system_locale = locale.getlocale()
+    if system_locale[0]:
+        example_date = datetime(2023, 5, 29)  # Example date today will suffice
+        locale.setlocale(locale.LC_TIME, system_locale)  # Set the locale explicitly
+        formatted_date = example_date.strftime("%x")  # Get formatted date
+        system_date_format = formatted_date.replace(
+            "2023", "YYYY"
+        ).replace(
+            "05", "MM"
+        ).replace(
+            "29", "DD"
+        )
+        return system_date_format
+    else:
+        # Only if no locale is set - possibly needs "MM-DD-YY" but not tested
+        return "YYYY-MM-DD"  # Default date format if detection fails
+
+
+def guessdate(dstr, line=None):
+    # now conjure/guess a date from a ?-?-? or ?/?/? string
     bits = dstr.split('-')
     if len(bits) < 3:
         bits = dstr.split('/')
@@ -198,26 +232,37 @@ def guessdate(dstr):
             ye = int(bits[0])
             mo = int(bits[1])
             da = int(bits[2])
-        else:
-            if int(bits[1]) > 12: # must be mo, da, ye
+        else:  # bits[2] is the year
+            if int(bits[1]) > 12 and int(bits[2]) > 31: # must be mo, da, ye
                 mo = int(bits[0])
                 da = int(bits[1])
                 ye = int(bits[2])
-            else: # probably da, mo, ye - but maybe not
-                da = int(bits[0])
-                mo = int(bits[1])
-                ye = int(bits[2])
+            else: # ambiguous
+                system_date_format = detect_system_date_format()
+                if line:
+                    print(f"\n235 baklabel system_date_format = {system_date_format}")
+                now = datetime.now()
+                fmt = now.strftime('%x')
+                if line:
+                    print(f"\n238 baklabel fmt = {fmt}")
+                fbits = system_date_format.split("-")
+                if len(fbits) < 3:
+                    fbits = system_date_format.split('/')
+                if len(fbits) == 3:
+                    ye = int(bits[fbits.index("YYYY")])
+                    mo = int(bits[fbits.index("MM")])
+                    da = int(bits[fbits.index("DD")])
         return date(ye, mo, da)
     else:
         raise ValueError('Invalid date format')
 
-class Grandad(object):
+class Grandad:
 
     # See __doc__ = synopsis below
     # making -h help reflect the above defaults - only used in synopsis
     svrname = 'blank'
-    if not SERVER_NAME == '':
-        svrname = SERVER_NAME
+    if not SERVER_PREFIX == '':
+        svrname = SERVER_PREFIX
 
     eoy = 'blank'
     if not EOY_LABEL == '':
@@ -226,13 +271,13 @@ class Grandad(object):
 
     synopsis = """
 Synopsis
-========%s
+========{0}
 Usage:
     baklabel.py [Options]
 
 Options:
     Without options, produce today's default label. If the current time is
-    prior to %sam (switchover time) then produce yesterday's label.
+    prior to {1}am (switchover time) then produce yesterday's label.
 
     -d (default date is today) Or use eg., '-d 2010/3/30' or '-d 30-3-2010'
        Use / or - as date separators. Date format is guessed. Mth-day-year
@@ -243,7 +288,7 @@ Options:
 
        To adjust the switchover time use eg.,'-d 6am' or '-d 6pm' etc.
 
-    -s (default is %s) server name used to prefix the backup label
+    -s (default is {2}) server name used to prefix the backup label
 
     -y (default is True) Append year to end-of-year label. Or use '-y False'
        or '-y No'. Anything else means True.
@@ -251,37 +296,38 @@ Options:
     -m (default is False) Append year to end-of-month label. Or use '-m True'
        or '-m Yes'. Anything else means False.
 
-    -n (default is %s) Month number commencing the new year. January is 1.
+    -n (default is {3}) Month number commencing the new year. January is 1.
 
-    -e (default is '%s') end-of-year label only has an effect on new year's
+    -e (default is '{4}') end-of-year label only has an effect on new year's
        eve in any year. You may prefer '-e eoy' or '-e end-of-year' if you
        don't want a label like 'dec_2010' or 'dec'.
 
-    -w (default is %s) Day number of weekly backups. Monday is 0, Sunday is 6
+    -w (default is {5}) Day number of weekly backups. Monday is 0, Sunday is 6
 
-    -h (or -?) shows this help text and the default label for today (below)
-    """ % (longdesc, SMALLHOURS, svrname, NEW_YEAR_MONTH, eoy, WEEKLY_DAY)
+    -h (or -?) shows this help text and the default label for today ...
+    """.format(longdesc, SMALLHOURS, svrname, NEW_YEAR_MONTH, eoy, WEEKLY_DAY)
 
     __doc__ = synopsis
 
-    def __init__(self,
+    def __init__(
+        self,
         backupday=date.today(),
-        server_name=SERVER_NAME,
+        server_prefix=SERVER_PREFIX,
         new_year_month=NEW_YEAR_MONTH,
         eoy_label=EOY_LABEL,
         append_eoy_year=APPEND_YEAR_TO_EOY_LABEL,
         append_eom_year=APPEND_YEAR_TO_EOM_LABEL,
         weekly_day=WEEKLY_DAY,
-        smallhours=SMALLHOURS
+        smallhours=SMALLHOURS,
     ):
 
         # increment = -1 means yesterday so hard-code 0 to begin with
         self.increment = 0
-        # smallhours = 3 means use yesterday only until 3am
+        # smallhours = 3 means use yesterday only until 3am - don't care about DST
         self.smallhours = smallhours
         self.backupday = self._confirmday(backupday)
         self.tomorrow = date.fromordinal(self.backupday.toordinal() + 1)
-        self.server_name = server_name
+        self.server_prefix = server_prefix
         self.new_year_month = new_year_month
         self.eoy_label = eoy_label
         self.append_eoy_year = append_eoy_year
@@ -336,15 +382,19 @@ Options:
                 return date.fromordinal(ordbackupdate -1)
         # must return a proper datetime object
         if backupday == date.today():
-            return date.fromordinal(date.today().toordinal() + self.increment)
+            return self._incremented_today()
         return backupday or date.today()
 
+    def _incremented_today(self):
+        return date.fromordinal(date.today().toordinal() + self.increment)
+
     def _monthend(self):
+        # %b is month abbreviated name Jan, Feb etc
         return self.backupday.strftime('%b').lower()
 
     def _prefixservername(self, label):
-        if self.server_name:
-            label = '%s_%s' % (self.server_name, label)
+        if self.server_prefix:
+            label = f'{self.server_prefix}_{label}'
         return label
 
     def _whichweeklabel(self):
@@ -359,7 +409,12 @@ Options:
             if xdate.weekday() == self.weekly_day:
                 i += 1
         # formatted strftime day plus underscore plus the weeknumber digit
-        return '%s_%s' % (self.backupday.strftime('%a').lower(), i)
+        return f"{self.backupday.strftime('%a').lower()}_{i}"
+
+    def monthend_label(self):
+        if self.tomorrow.day == 1:
+            return self._monthend()
+        return ""
 
     def label(self):
         """ priority of reasoning is ...
@@ -373,15 +428,15 @@ Options:
         """
 
         # first check if it is new year's day tomorrow
-        if self.tomorrow.month == self.new_year_month and \
-                                  self.tomorrow.day == 1:
+        if self.tomorrow.month == self.new_year_month and self.tomorrow.day == 1:
             # this is the new years eve block
             if self.eoy_label == '':
-                # blank is the default which means use the month
+                # blank is the default which means use the month abbrev
                 self.eoy_label = self._monthend()
 
             if self.append_eom_year or self.append_eoy_year :
-                label = '%s_%s' % (self.eoy_label, self.backupday.year)
+                # append the year as suffix
+                label = f'{self.eoy_label}_{self.backupday.year}'
             else:
                 label = self.eoy_label
 
@@ -390,7 +445,7 @@ Options:
             # this is the end of month block - just get today's month
             label = self._monthend()
             if self.append_eom_year:
-                label =  '%s_%s' % (label, self.backupday.year)
+                label =  f'{label}_{self.backupday.year}'
 
         # if we get this far then focus on today
         elif self.backupday.weekday() == self.weekly_day:
@@ -403,6 +458,7 @@ Options:
         return self._prefixservername(label)
 
 if __name__ == "__main__":
+
     import sys
 
     # this gets called when used from the command line so we need to be
@@ -417,7 +473,7 @@ if __name__ == "__main__":
     ye = backupday.year
     mo = backupday.month
     da = backupday.day
-    server_name = SERVER_NAME
+    server_prefix = SERVER_PREFIX
     new_year_month = NEW_YEAR_MONTH
     eoy_label = EOY_LABEL
     append_eoy_year = APPEND_YEAR_TO_EOY_LABEL
@@ -426,60 +482,109 @@ if __name__ == "__main__":
     smallhours = SMALLHOURS
 
     # now see if anything was nominated in the command line
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "-s",
+        "--server-prefix",
+        type=str,
+        help="Optional server name as prefix to the backup label",
+        default="",
+    )
+    parser.add_argument(
+        "-y",
+        "--append-eoy-year",
+        type=str,
+        help="Append the year to the EOY label",
+        default="Yes",
+    )
+    parser.add_argument(
+        "-m",
+        "--append-eom-year",
+        type=str,
+        help="Append the year to the EOM label",
+        default="No",
+    )
+    parser.add_argument(
+        "-n",
+        "--new_year_month",
+        type=int,
+        help="Month number commencing the new year. January is 1",
+        default=1,
+    )
+    parser.add_argument(
+        "-e",
+        "--eoy-label",
+        type=str,
+        help="Label element for new year's eve only. Replaces the month abbrev.",
+        default="",
+    )
+
+    parser.add_argument(
+        "-w",
+        "--weekly_day",
+        type=int,
+        help="Day-of-week number for weekly backups. Monday is 0, Sunday is 6",
+        default=4,
+    )
+    #args = parser.parse_args()
+
+
+
     args = sys.argv
-    if ('-h' in args) or ('-?' in args):
+    if ('-h' in args) or ('-?' in args) or ('--help' in args):
         tmpo = Grandad()
         print(tmpo.synopsis)
         del tmpo
 
-    if '-s' in args:
+    if ('-s' in args) or ('--server-prefix' in args):
         try:
-            server_name = args[args.index('-s') + 1]
-        except Exception as e:
-            print("%s" % e, file=sys.stderr)
+            server_prefix = args[args.index('-s') + 1]
+        except Exception as err:
+            print(f'{err}')
             ok = False
 
-    if '-y' in args:
+    if ('-y' in args) or ('--append-eoy-year' in args):
         aarg = args[args.index('-y') + 1]
         if aarg.lower() == 'false' or aarg.lower() == 'no':
             append_eoy_year = False
         else:
             append_eoy_year = True
 
-    if '-m' in args:
+    if ('-m' in args) or ('--append-eom-year' in args):
         marg = args[args.index('-m') + 1]
         if marg.lower() == 'true' or marg.lower() == 'yes':
             append_eom_year = True
         else:
             append_eom_year = False
 
-    if '-n' in args:
+    if ('-n' in args) or ('--new-year-month' in args):
         try:
             x = int(args[args.index('-n') + 1])
             if x in range(1,13):
                 new_year_month = x
             else:
-                print("%s is not a valid month number" % x, file=sys.stderr)
+                print(f"{x} is not a valid month number")
                 raise ValueError
-        except Exception as e:
-            print("%s" % e, file=sys.stderr)
+        except Exception as err:
+            print(f'{err}')
             ok = False
 
-    if '-e' in args:
+    if ('-e' in args) or ('--eoy-label' in args):
         try:
             eoy_label = args[args.index('-e') + 1]
-        except Exception as e:
-            print("%s" % e, file=sys.stderr)
+        except Exception as err:
+            print(f'{err}')
             ok = False
 
-    if '-w' in args:
+    if ('-w' in args) or ('weekly-day' in args):
         try:
             weekly_day = int(args[args.index('-w') + 1])
-        except Exception as e:
-            print("%s" % e, file=sys.stderr)
+        except Exception as err:
+            print(f'{err}')
             ok = False
 
-    if '-d' in args:
+    if ('-d' in args) or ('--day' in args) or ('--date' in args):
         '''
            1. look for a -d parameter and if that is invalid report it or ...
            2. look for am and pm first and if that fails be silent and ...
@@ -527,20 +632,22 @@ if __name__ == "__main__":
             except Exception:
                 backupday = guessdate(darg)
 
-        except Exception as e:
-            print("%s %s" % (err,e), file=sys.stderr)
+        except Exception as err2:
+            print("{err} {err2}")
             ok = False
 
     # all the switches are tested and collected
     if ok:
-        baklab = Grandad(backupday=backupday,
-                          server_name=server_name,
-                           new_year_month=new_year_month,
-                            eoy_label=eoy_label,
-                             append_eoy_year=append_eoy_year,
-                              append_eom_year=append_eom_year,
-                               weekly_day=weekly_day,
-                                smallhours=smallhours)
+        baklab = Grandad(
+            backupday=backupday,
+            server_prefix=server_prefix,
+            new_year_month=new_year_month,
+            eoy_label=eoy_label,
+            append_eoy_year=append_eoy_year,
+            append_eom_year=append_eom_year,
+            weekly_day=weekly_day,
+            smallhours=smallhours,
+        )
         lab = baklab.label()
         # payload to stdout
         print(lab)

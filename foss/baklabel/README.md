@@ -1,5 +1,5 @@
 
-baklabel is designed for use in automated scripts to deliver a sensible
+Baklabel is intended for use in automated scripts to deliver a sensible
 directory path fragment (or label) each day to construct a grandfathered
 local backup destination. It can also be run as a stand-alone utility to
 find the backup label produced for any given date and set of options.
@@ -8,7 +8,7 @@ Run  baklabel.py -h  to see command line usage options.
 
 Call baklabel directly or import it and produce labels from your code.
 
-Python 2.6, 2.7 and 3.x
+Python 2.7 and 3.x
 
 In the docs directory after installing, see release_note.txt for more
 detail on the package, instructions.txt for baklabel output examples and
@@ -25,7 +25,9 @@ going back for twelve months. This represents real comfort when retrieving
 data which has been compromised at some unknown point in the past.
 
 Source:  Userid is 'public' with no password.
-http://svn.pczen.com.au/repos/pysrc/gpl3/baklabel/distrib/
+https://svn.climate.com.au/repos/pysrc/foss/baklabel/distrib/
+
+(That may change to github shortly)
 
 Mike Dewhirst
 miked@dewhirst.com.au

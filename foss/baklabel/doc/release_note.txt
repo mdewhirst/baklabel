@@ -1,37 +1,41 @@
 baklabel - see Description below
 ========
 
-Version   Build Who  When/What
+Version  Build Who  When/What
 ==============================
+
+ver 1.1.0 2729  md  23 May 2023 - Change from GPL3 to MIT license, change
+                    to pyproject.toml and clean up strings using f-strings
+
 
 ver 1.0.3 2729  md  24 Aug 2012 - Code review and tweaks to test importing
                     to cater for in-house python path adjustments
 
-ver 1.0.2 2685  md   8 Mar 2011 - Refactored guessdate() out of __main__
-                     to permit string dates as a calling convenience
+ver 1.0.2 2685  md  8 Mar 2011 - Refactored guessdate() out of __main__
+                    to permit string dates as a calling convenience
 
-ver 1.0.1 2671  md   4 Nov 2010 - Minor refactoring and tidying comments
+ver 1.0.1 2671  md  4 Nov 2010 - Minor refactoring and tidying comments
 
-ver 1.0.0 2670  md   3 Nov 2010 - New option to append current year to
-                     any month-end label, not just end-of-year.
+ver 1.0.0 2670  md  3 Nov 2010 - New option to append current year to
+                    any month-end label, not just end-of-year.
 
-ver 0.2.0 2664  md   27 oct 2010 - Help now respects defaults which have
-                     been adjusted in the source code. A new default now
-                     permits adjustment of new_year_month which sets the
-                     end-of-year label to any desired month.
+ver 0.2.0 2664  md  27 oct 2010 - Help now respects defaults which have
+                    been adjusted in the source code. A new default now
+                    permits adjustment of new_year_month which sets the
+                    end-of-year label to any desired month.
 
-ver 0.1.0b 2646  md  8 oct 2010 - Added -d numeric option for setting
-                     the label to x days ago. Eg., -1 = yesterday. Also
-                     added a time trigger option in the -d switch such
-                     that, for example, -d 3am will produce yesterday's
-                     label if baklabel is called prior to 3am
+ver 0.1.0b 2646  md 8 oct 2010 - Added -d numeric option for setting
+                    the label to x days ago. Eg., -1 = yesterday. Also
+                    added a time trigger option in the -d switch such
+                    that, for example, -d 3am will produce yesterday's
+                    label if baklabel is called prior to 3am
 
-ver 0.0.0a 2640  md  1 jul 2010 - first written
+ver 0.0.0a 2640  md 1 jul 2010 - first written
 
 
 Description
 ===========
-baklabel is designed for use in automated scripts to deliver a sensible
+Baklabel is intended for use in automated scripts to deliver a sensible
 directory path fragment (or label) each day to construct a grandfathered
 local backup destination. It can also be run as a stand-alone utility to
 find the backup label produced for any given date and set of options.
@@ -40,7 +44,7 @@ Run  baklabel.py -h  to see command line usage options.
 
 Call baklabel directly or import it and produce labels from your code.
 
-Python 2.6, 2.7 and 3.x
+Python 2.7 and 3.x
 
 In the docs directory after installing, see release_note.txt for more
 detail on the package, instructions.txt for baklabel output examples and
@@ -120,7 +124,9 @@ equal to 7 and skip saving week-at-a-time backups. Not recommended.
 
 
 Source:  Userid is 'public' with no password.
-http://svn.pczen.com.au/repos/pysrc/gpl3/baklabel/distrib/
+https://svn.climate.com.au/repos/pysrc/foss/baklabel/distrib/
+
+(That may change to github shortly)
 
 Mike Dewhirst
 miked@dewhirst.com.au
@@ -129,17 +135,23 @@ miked@dewhirst.com.au
 
 License
 =======
-Copyright 2010 Mike Dewhirst
+Copyright (c) 2023 Climate Pty Ltd
 
-This program is free software: you can redistribute it and/or modify it
-under the terms of the GNU Library or Lesser General Public License (LGPL)
-as published by the Free Software Foundation.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-This program is distributed in the hope that it will be useful, but WITHOUT
-ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-more details.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-You should have received a copy of the GNU General Public License and the
-GNU Library or Lesser General Public License along with this program.  If
-not, see <http://www.gnu.org/licenses/>.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+

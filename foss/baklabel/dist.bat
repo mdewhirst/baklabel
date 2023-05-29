@@ -2,53 +2,35 @@
 echo Please wait for tests to run
 
 if %1xx == xx (
-set reg=
-set upl=
+set bld=end
+set upl=end
 ) else (
-set reg=register
+set bld=build
 set upl=upload
 )
 
-echo %reg% %upl%
+set py=311
 
-\Python27\python baklabel\test\test_baklabel.py
+C:\Python%py%\python src\baklabel\test_baklabel.py
 
-\Python34\python baklabel\test\test_baklabel.py
+if %bld% == end goto end
+
+echo Build distribution wheel
 
 pause
 
-del MANIFEST
+C:\Python%py%\python dist.py
 
+C:\Python%py%\python -m build
 
-del pyver.run
+if %upl% == end goto end
 
-\Python27\python dist.py
+echo Upload distribution
 
-\Python27\python setup.py sdist
+pause
 
-xcopy dist\*.zip distrib /y
-
-ren pyver.txt pyver.run
-
-\Python27\python setup.py %reg% bdist_wininst --user-access-control auto %upl%
-
-xcopy dist\*.exe distrib /y
-
-
-del pyver.run
-
-\Python34\python dist.py
-
-\Python34\python setup.py sdist
-
-xcopy dist\*.zip distrib /y
-
-ren pyver.txt pyver.run
-
-\Python34\python setup.py %reg% sdist bdist_wininst --user-access-control auto %upl%
-
-xcopy dist\*.exe distrib /y
-
+twine upload dist/*
+:end
 @echo on
 
 

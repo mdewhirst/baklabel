@@ -1,30 +1,95 @@
 import unittest
 import os, sys
 from datetime import date
-sys.path.append(
-    os.path.dirname(
-        os.path.dirname(
-            os.path.abspath(__file__)
-        )
-    ).replace('\\', '/')
-)
+from baklabel import Grandad, guessdate
 
-try:
-    from baklabel import Grandad
-except ImportError:
-    from baklabel.baklabel import Grandad
 
-class test_baklabel(unittest.TestCase):
+class TestGuessdate(unittest.TestCase):
+
+    def test_usa_date_slash(self):
+        dlst = 12, 31, 2023
+        dstr = "/".join(str(item) for item in dlst)
+        self.assertEqual(str(guessdate(dstr)), '2023-12-31')
+
+
+    def test_eu_date_slash(self):
+        dlst = 2023, 12, 31
+        dstr = "/".join(str(item) for item in dlst)
+        self.assertEqual(str(guessdate(dstr)), '2023-12-31')
+
+
+    def test_au_date_slash(self):
+        dlst = 31, 12, 2023
+        dstr = "/".join(str(item) for item in dlst)
+        self.assertEqual(str(guessdate(dstr)), '2023-12-31')
+
+
+    def test_usa_date_ambig_slash(self):
+        dlst = 5, 6, 2023
+        dstr = "/".join(str(item) for item in dlst)
+        self.assertEqual(str(guessdate(dstr, line=None)), '2023-06-05')
+
+
+    def test_eu_date_ambig_slash(self):
+        dlst = 2023, 6, 5
+        dstr = "/".join(str(item) for item in dlst)
+        self.assertEqual(str(guessdate(dstr)), '2023-06-05')
+
+
+    def test_au_date_ambig_slash(self):
+        dlst = 5, 6, 2023
+        dstr = "/".join(str(item) for item in dlst)
+        self.assertEqual(str(guessdate(dstr)), '2023-06-05')
+
+
+    def test_usa_date_slash(self):
+        dlst = 12, 31, 2023
+        dstr = "-".join(str(item) for item in dlst)
+        self.assertEqual(str(guessdate(dstr)), '2023-12-31')
+
+
+    def test_eu_date(self):
+        dlst = 2023, 12, 31
+        dstr = "-".join(str(item) for item in dlst)
+        self.assertEqual(str(guessdate(dstr)), '2023-12-31')
+
+
+    def test_au_date(self):
+        dlst = 31, 12, 2023
+        dstr = "-".join(str(item) for item in dlst)
+        self.assertEqual(str(guessdate(dstr)), '2023-12-31')
+
+
+    def test_usa_date_ambig(self):
+        dlst = 5, 6, 2023
+        dstr = "-".join(str(item) for item in dlst)
+        self.assertEqual(str(guessdate(dstr, line=None)), '2023-06-05')
+
+
+    def test_eu_date_ambig(self):
+        dlst = 2023, 6, 5
+        dstr = "-".join(str(item) for item in dlst)
+        self.assertEqual(str(guessdate(dstr)), '2023-06-05')
+
+
+    def test_au_date_ambig(self):
+        dlst = 5, 6, 2023
+        dstr = "-".join(str(item) for item in dlst)
+        self.assertEqual(str(guessdate(dstr)), '2023-06-05')
+
+
+
+class TestBaklabel(unittest.TestCase):
     """
     def __init__(self,
-                  backupday=date.today(),
-                   server_name=SERVER_NAME,
-                    new_year_month=NEW_YEAR_MONTH,
-                     eoy_label=EOY_LABEL,
-                      append_eoy_year=APPEND_YEAR_TO_EOY_LABEL,
-                       append_eom_year=APPEND_YEAR_TO_EOM_LABEL,
-                        weekly_day=WEEKLY_DAY,
-                         smallhours=SMALLHOURS):
+        backupday=date.today(),
+        server_prefix=SERVER_PREFIX,
+        new_year_month=NEW_YEAR_MONTH,
+        eoy_label=EOY_LABEL,
+        append_eoy_year=APPEND_YEAR_TO_EOY_LABEL,
+        append_eom_year=APPEND_YEAR_TO_EOM_LABEL,
+        weekly_day=WEEKLY_DAY,
+        smallhours=SMALLHOURS):
     """
 
     def test_new_year_day_eom_year_bad_str(self):
@@ -254,7 +319,7 @@ class test_baklabel(unittest.TestCase):
         """ 48 """
         dday = date(2040, 3, 8)
         expected = 'a_thu'
-        tsto = Grandad(dday, server_name='a',
+        tsto = Grandad(dday, server_prefix='a',
                                 weekly_day=7)
         result = tsto.label()
         self.assertEqual(result, expected)
@@ -263,7 +328,7 @@ class test_baklabel(unittest.TestCase):
         """ 47 """
         dday = date(2040, 3, 7)
         expected = 'a_wed'
-        tsto = Grandad(dday, server_name='a',
+        tsto = Grandad(dday, server_prefix='a',
                                 weekly_day=7)
         result = tsto.label()
         self.assertEqual(result, expected)
@@ -272,7 +337,7 @@ class test_baklabel(unittest.TestCase):
         """ 46 """
         dday = date(2040, 3, 6)
         expected = 'a_tue'
-        tsto = Grandad(dday, server_name='a',
+        tsto = Grandad(dday, server_prefix='a',
                                 weekly_day=7)
         result = tsto.label()
         self.assertEqual(result, expected)
@@ -281,7 +346,7 @@ class test_baklabel(unittest.TestCase):
         """ 45 """
         dday = date(2040, 3, 5)
         expected = 'a_mon'
-        tsto = Grandad(dday, server_name='a',
+        tsto = Grandad(dday, server_prefix='a',
                                 weekly_day=7)
         result = tsto.label()
         self.assertEqual(result, expected)
@@ -290,7 +355,7 @@ class test_baklabel(unittest.TestCase):
         """ 44 """
         dday = date(2040, 3, 4)
         expected = 'a_sun'
-        tsto = Grandad(dday, server_name='a',
+        tsto = Grandad(dday, server_prefix='a',
                                 weekly_day=7)
         result = tsto.label()
         self.assertEqual(result, expected)
@@ -299,7 +364,7 @@ class test_baklabel(unittest.TestCase):
         """ 43 """
         dday = date(2040, 3, 3)
         expected = 'a_sat'
-        tsto = Grandad(dday, server_name='a',
+        tsto = Grandad(dday, server_prefix='a',
                                 weekly_day=7)
         result = tsto.label()
         self.assertEqual(result, expected)
@@ -308,7 +373,7 @@ class test_baklabel(unittest.TestCase):
         """ 42 """
         dday = date(2040, 3, 2)
         expected = 'a_fri'
-        tsto = Grandad(dday, server_name='a',
+        tsto = Grandad(dday, server_prefix='a',
                                 weekly_day=7)
         result = tsto.label()
         self.assertEqual(result, expected)
@@ -317,7 +382,7 @@ class test_baklabel(unittest.TestCase):
         """ 41 """
         dday = date(2040, 3, 1)
         expected = 'a_thu'
-        tsto = Grandad(dday, server_name='a',
+        tsto = Grandad(dday, server_prefix='a',
                                 weekly_day=7)
         result = tsto.label()
         self.assertEqual(result, expected)
@@ -326,7 +391,7 @@ class test_baklabel(unittest.TestCase):
         """ 40 """
         dday = date(2040, 3, 1)
         expected = 'a_thu_1'
-        tsto = Grandad(dday, server_name='a',
+        tsto = Grandad(dday, server_prefix='a',
                                 weekly_day=3)
         result = tsto.label()
         self.assertEqual(result, expected)
@@ -335,7 +400,7 @@ class test_baklabel(unittest.TestCase):
         """ 39 """
         dday = date(2040, 3, 11)
         expected = 'a_sun_2'
-        tsto = Grandad(dday, server_name='a',
+        tsto = Grandad(dday, server_prefix='a',
                                 weekly_day=6)
         result = tsto.label()
         self.assertEqual(result, expected)
@@ -344,7 +409,7 @@ class test_baklabel(unittest.TestCase):
         """ 38 """
         dday = date(2040, 3, 31)
         expected = 'a_mar'
-        tsto = Grandad(dday, server_name='a',
+        tsto = Grandad(dday, server_prefix='a',
                                 weekly_day=5)
         result = tsto.label()
         self.assertEqual(result, expected)
@@ -353,7 +418,7 @@ class test_baklabel(unittest.TestCase):
         """ 37 """
         dday = date(2040, 3, 24)
         expected = 'a_sat_4'
-        tsto = Grandad(dday, server_name='a',
+        tsto = Grandad(dday, server_prefix='a',
                                 weekly_day=5)
         result = tsto.label()
         self.assertEqual(result, expected)
@@ -362,7 +427,7 @@ class test_baklabel(unittest.TestCase):
         """ 36 """
         dday = date(2010, 3, 18)
         expected = 'a_thu_3'
-        tsto = Grandad(dday, server_name='a',
+        tsto = Grandad(dday, server_prefix='a',
                                 weekly_day=3)
         result = tsto.label()
         self.assertEqual(result, expected)
@@ -371,7 +436,7 @@ class test_baklabel(unittest.TestCase):
         """ 35 """
         dday = date(2040, 1, 1)
         expected = 'a_sun'
-        tsto = Grandad(dday, server_name='a')
+        tsto = Grandad(dday, server_prefix='a')
         result = tsto.label()
         self.assertEqual(result, expected)
 
@@ -379,7 +444,7 @@ class test_baklabel(unittest.TestCase):
         """ 34 """
         dday = date(2040, 2, 28)
         expected = 'a_tue'
-        tsto = Grandad(dday, server_name='a')
+        tsto = Grandad(dday, server_prefix='a')
         result = tsto.label()
         self.assertEqual(result, expected)
 
@@ -387,7 +452,7 @@ class test_baklabel(unittest.TestCase):
         """ 33 """
         dday = date(2040, 2, 29)
         expected = 'a_feb'
-        tsto = Grandad(dday, server_name='a')
+        tsto = Grandad(dday, server_prefix='a')
         result = tsto.label()
         self.assertEqual(result, expected)
 
@@ -395,7 +460,7 @@ class test_baklabel(unittest.TestCase):
         """ 32 """
         dday = date(2040, 12, 31)
         expected = 'a_dec_2040'
-        tsto = Grandad(dday, server_name='a')
+        tsto = Grandad(dday, server_prefix='a')
         result = tsto.label()
         self.assertEqual(result, expected)
 
@@ -403,7 +468,7 @@ class test_baklabel(unittest.TestCase):
         """ 31 """
         dday = date(2040, 12, 31)
         expected = 'a_eoy_2040'
-        tsto = Grandad(dday, server_name='a',
+        tsto = Grandad(dday, server_prefix='a',
                                 eoy_label='eoy')
         result = tsto.label()
         self.assertEqual(result, expected)
@@ -412,7 +477,7 @@ class test_baklabel(unittest.TestCase):
         """ 30 """
         dday = date(2040, 3, 31)
         expected = 'a_mar'
-        tsto = Grandad(dday, server_name='a')
+        tsto = Grandad(dday, server_prefix='a')
         result = tsto.label()
         self.assertEqual(result, expected)
 
@@ -420,7 +485,7 @@ class test_baklabel(unittest.TestCase):
         """ 29 """
         dday = date(2040, 3, 2)
         expected = 'a_fri_1'
-        tsto = Grandad(dday, server_name='a')
+        tsto = Grandad(dday, server_prefix='a')
         result = tsto.label()
         self.assertEqual(result, expected)
 
@@ -428,7 +493,7 @@ class test_baklabel(unittest.TestCase):
         """ 28 """
         dday = date(2040, 3, 9)
         expected = 'a_fri_2'
-        tsto = Grandad(dday, server_name='a')
+        tsto = Grandad(dday, server_prefix='a')
         result = tsto.label()
         self.assertEqual(result, expected)
 
@@ -436,7 +501,7 @@ class test_baklabel(unittest.TestCase):
         """ 27 """
         dday = date(2010, 3, 19)
         expected = 'a_fri_3'
-        tsto = Grandad(dday, server_name='a')
+        tsto = Grandad(dday, server_prefix='a')
         result = tsto.label()
         self.assertEqual(result, expected)
 
@@ -444,7 +509,7 @@ class test_baklabel(unittest.TestCase):
         """ 26 """
         dday = date(2040, 3, 23)
         expected = 'a_fri_4'
-        tsto = Grandad(dday, server_name='a')
+        tsto = Grandad(dday, server_prefix='a')
         result = tsto.label()
         self.assertEqual(result, expected)
 
@@ -452,7 +517,7 @@ class test_baklabel(unittest.TestCase):
         """ 25 """
         dday = date(2040, 3, 30)
         expected = 'a_fri_5'
-        tsto = Grandad(dday, server_name='a')
+        tsto = Grandad(dday, server_prefix='a')
         result = tsto.label()
         self.assertEqual(result, expected)
 
@@ -655,7 +720,7 @@ class test_baklabel(unittest.TestCase):
 if __name__ == "__main__":
 
     import sys
-    print('\nPython %s' % sys.version[0:3])
+    print(f'\nPython {sys.version[0:4]}')
     unittest.main()
 
 

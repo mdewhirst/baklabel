@@ -1,3 +1,0 @@
-include README.txt
-recursive-include baklabel\test *.py
-recursive-include baklabel\doc *.txt

@@ -21,12 +21,12 @@ shutil.rmtree("dist", ignore_errors=True)
 
 version = '0.0.0'
 build = '1234'
-pyver = '-py%s' % sys.version[0:3]
+pyver = '-py%s' % sys.version[0:4]
 
 with open('./pyver.txt', 'w') as fsock:
     fsock.write(pyver)
 
-source = os.path.join(os.curdir, 'baklabel', 'baklabel.py')
+source = os.path.join(os.curdir, 'src', 'baklabel', 'baklabel.py')
 fsock = open(source, 'r')
 for line in fsock.readlines():
     if line.startswith('ver'):
@@ -36,10 +36,8 @@ for line in fsock.readlines():
         break
 fsock.close()
 
-version = '%s-%s' % (version, build)
-
 #2 update setup.py with the version and build numbers
-setupsource = os.path.join(os.curdir, 'setup.py')
+setupsource = os.path.join(os.curdir, 'pyproject.toml')
 fsock = open(setupsource, 'r')
 lines = fsock.readlines()
 fsock.close()
@@ -50,7 +48,7 @@ for line in lines:
     if line.startswith('version'):
         bits = line.split('=')
         # put in ver-build
-        lines[i] = "%s='%s'\n" % (bits[0], version)
+        lines[i] = f"{bits[0]} = '{version}'\n"
         break
 
 fsock = open(setupsource, 'w')
@@ -59,25 +57,25 @@ fsock.close()
 
 #3
 
-from baklabel import baklabel
+from src.baklabel import baklabel
 
-relnote = os.path.join('baklabel', 'doc', 'release_note.txt')
+relnote = os.path.join('.', 'doc', 'release_note.txt')
 fsock = open(relnote, 'w')
 fsock.writelines(baklabel.__doc__)
 fsock.close()
 
-about = os.path.join('baklabel', 'doc', 'about.txt')
+about = os.path.join('.', 'doc', 'about.txt')
 fsock = open(about, 'w')
-fsock.write('baklabel.py %s\n\n' % version)
+fsock.write(f'baklabel.py {version}\n\n')
 fsock.writelines(baklabel.source)
 fsock.close()
 
-synopsis = os.path.join('baklabel', 'doc', 'synopsis.txt')
+synopsis = os.path.join('.', 'doc', 'synopsis.txt')
 fsock = open(synopsis, 'w')
 fsock.writelines(baklabel.Grandad.synopsis)
 fsock.close()
 
-readme = 'README.txt'
+readme = 'README.md'
 fsock = open(readme, 'w')
 fsock.writelines(baklabel.longdesc)
 fsock.writelines(baklabel.longerdesc)
