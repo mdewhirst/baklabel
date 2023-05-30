@@ -108,7 +108,7 @@ and paste the following few lines (with or without the # lines):
 #########################################################
 import baklabel                                         # 1
 baklab = baklabel.Grandad()                             # 2
-baklabcmd = '{backup.bat} {baklab.label()}'             # 3
+baklabcmd = f'{backup.bat} {baklab.label()}'            # 3
 import os                                               # 4
 os.system(baklabcmd)                                    # 5
 #########################################################
