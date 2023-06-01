@@ -1,33 +1,35 @@
 
-Baklabel is intended for use in automated scripts to deliver a sensible
-directory path fragment (or label) each day to construct a grandfathered
-local backup destination. It can also be run as a stand-alone utility to
-find the backup label produced for any given date and set of options.
+Baklabel is intended for use in automated scripts to deliver a sensible directory path
+fragment (or label) each day to construct a grandfathered local backup.
 
-Run  baklabel.py -h  to see command line usage options.
+Import baklabel.Grandad to produce today's label fragment.
 
-Call baklabel directly or import it and produce labels from your code.
+See test_baklabel.py for examples of how to call Grandad
 
-Python 2.7 and 3.x
+It is also a stand-alone utility to find the backup label produced for any given date
+and set of options.
 
-In the docs directory after installing, see release_note.txt for more
-detail on the package, instructions.txt for baklabel output examples and
-backup_howto.txt for a complete example backup script for Windows.
+python3 baklabel.py -h  to see command line usage and options.
 
-Properly grandfathered, there needs to be a daily backup to one of 23
-separate tapes, sets of media or local directories on a storage device.
-This complement is made up of 6 weekday backups, 5 week backups and 12
-month backups. 23 backups is quite economical for 12 months coverage.
+Python 3.x (Python 2.7 should also work but is no longer tested)
 
-This provides a stream of untouched backups for at least seven days plus
-the ability to go back four or five Fridays plus having monthly snapshots
-going back for twelve months. This represents real comfort when retrieving
-data which has been compromised at some unknown point in the past.
+In the doc directory of the baklabel repo, see release_note.txt for more detail on the
+package, examples.txt for baklabel output examples and backup_howto.txt for a sample
+backup script for Windows.
 
-Source:  Userid is 'public' with no password.
-https://svn.climate.com.au/repos/pysrc/foss/baklabel/distrib/
 
-(That may change to github shortly)
+Properly grandfathered, there needs to be a daily backup to one of 23 separate tapes,
+sets of media or local directories on a storage device. This complement is made up of
+6 weekday backups, 5 week-end backups, 11 month-end backups plus one for year-end.
+
+23 backups is quite economical for 12 months coverage.
+
+This represents real comfort when retrieving data which has been compromised at some
+unknown point in the past.
+
+
+Source:  https://github.com/mdewhirst/baklabel
 
 Mike Dewhirst
 miked@dewhirst.com.au
+

@@ -1,39 +1,38 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2011-2023 Climate Pty Ltd
 longdesc = """
-Baklabel is intended for use in automated scripts to deliver a sensible
-directory path fragment (or label) each day to construct a grandfathered
-local backup destination. It can also be run as a stand-alone utility to
-find the backup label produced for any given date and set of options.
+Baklabel is intended for use in automated scripts to deliver a sensible directory path
+fragment (or label) each day to construct a grandfathered local backup.
 
-Run  baklabel.py -h  to see command line usage options.
+Import baklabel.Grandad to produce today's label fragment.
 
-Call baklabel directly or import it and produce labels from your code.
+See test_baklabel.py for examples of how to call Grandad
 
-Python 2.7 and 3.x
+It is also a stand-alone utility to find the backup label produced for any given date
+and set of options.
 
-In the docs directory after installing, see release_note.txt for more
-detail on the package, instructions.txt for baklabel output examples and
-backup_howto.txt for a complete example backup script for Windows.
+python3 baklabel.py -h  to see command line usage and options.
+
+Python 3.x (Python 2.7 should also work but is no longer tested)
+
+In the doc directory of the baklabel repo, see release_note.txt for more detail on the
+package, examples.txt for baklabel output examples and backup_howto.txt for a sample
+backup script for Windows.
 """
 
 longerdesc = """
-Properly grandfathered, there needs to be a daily backup to one of 23
-separate tapes, sets of media or local directories on a storage device.
-This complement is made up of 6 weekday backups, 5 week backups and 12
-month backups. 23 backups is quite economical for 12 months coverage.
+Properly grandfathered, there needs to be a daily backup to one of 23 separate tapes,
+sets of media or local directories on a storage device. This complement is made up of
+6 weekday backups, 5 week-end backups, 11 month-end backups plus one for year-end.
 
-This provides a stream of untouched backups for at least seven days plus
-the ability to go back four or five Fridays plus having monthly snapshots
-going back for twelve months. This represents real comfort when retrieving
-data which has been compromised at some unknown point in the past.
+23 backups is quite economical for 12 months coverage.
+
+This represents real comfort when retrieving data which has been compromised at some
+unknown point in the past.
 """
 
-source = """
-Source:  Userid is 'public' with no password.
-https://svn.climate.com.au/repos/pysrc/foss/baklabel/distrib/
-
-(That may change to github shortly)
+repo = """
+Source:  https://github.com/mdewhirst/baklabel
 
 Mike Dewhirst
 miked@dewhirst.com.au
@@ -42,8 +41,12 @@ miked@dewhirst.com.au
 relnote = """baklabel - see Description below
 ========
 
-Version  Build Who  When/What
-==============================
+Version    Who  When/What
+=========================
+
+ver 1.2.2   md  1 Jun 2023 - Further clean up documentation
+
+ver 1.2.1   md  30 May 2023 - Clean up documentation
 
 ver 1.2.0   md  29 May 2023 - Improve guessdate() to resolve ambiguous dates
 
@@ -62,16 +65,16 @@ ver 1.0.1   md  4 Nov 2010 - Minor refactoring and tidying comments
 ver 1.0.0   md  3 Nov 2010 - New option to append current year to any month-end label,
                 not just end-of-year.
 
-ver 0.2.0   md  27 oct 2010 - Help now respects defaults which have been adjusted in
+ver 0.2.0   md  27 Oct 2010 - Help now respects defaults which have been adjusted in
                 the source code. A new default now permits adjustment of new_year_month
                 which sets the end-of-year label to any desired month.
 
-ver 0.1.0b   md 8 oct 2010 - Added -d numeric option for setting the label to x days
+ver 0.1.0b   md 8 Oct 2010 - Added -d numeric option for setting the label to x days
                 ago. Eg., -1 = yesterday. Also added a time trigger option in the -d
                 switch such that, for example, -d 3am will produce yesterday's label
                 if baklabel is called prior to 3am
 
-ver 0.0.0a   md 1 jul 2010 - first written
+ver 0.0.0a   md 1 Jul 2010 - first written
 
 
 Description
@@ -79,25 +82,21 @@ Description
 
 Grandfathered Backups
 ====================={1}
-Each of the regular weekday Sat to Thu backups will be overwritten seven
-days later. However, if an end-of-month occurs on that weekday the month-
-end backup will happen instead and the weekday backup will survive for an
-extra seven days.
+Each of the regular weekday Sat to Thu backups will be overwritten seven days later.
+However, if an end-of-month occurs on that weekday the month-end backup will happen
+instead and that weekday backup will survive for an extra seven days.
 
-Four of the weekly backups get overwritten four weeks later. The fifth
-Friday tape gets overwritten once in a blue moon! Whenever there are five
-Fridays in a month. If end-of-month occurs on a Friday then the month-end
-backup occurs and that Friday backup survives for an extra month or so
-before being overwritten again.
+Four of the week-end (default is Friday) backups get overwritten four weeks later. The
+fifth Friday backup gets overwritten whenever there are five Fridays in a month.
 
-Each month-end backup gets overwritten a year later.
+If end-of-month occurs on a Friday then the month-end backup occurs and that Friday
+backup survives for an extra month or so before being overwritten again.
 
-Media taken off-site will not be overwritten in future so they should be
-manually labeled with the actual date of the backup carried.
+Each month-end backup gets overwritten in the following year unless archived.
 
-Here are the default labels produced by baklabel for on-site backups:
+Here are all the default labels produced by baklabel for on-site backups:
 
-dec_2010  = 31 Dec 2010
+dec_2023  = 31 Dec 2023
 nov       = 30 Nov
 oct       = 31 Oct
 sep       = 30 Sep
@@ -121,29 +120,31 @@ fri_1,    = day 4 of the week
 sat       = day 5 of the week
 sun       = day 6 of the week
 
-If a backup name is higher in this list than another then it will be
-produced instead of the one below it.
+If a backup name is higher in this list than another then it will be produced instead
+of the one below it.
 
-End-of-year is usually special for archiving reasons. Otherwise it is just
-another month-end. baklabel defaults to appending the year to the December
-backup label. This can be undone with the '-y False' option.
+End-of-year is usually special for archiving reasons. Otherwise it is just another
+month-end. baklabel defaults to appending the year to the December backup label. This
+can be defeated with the '-y False' option.
 
-Also, if the new year begins in July rather than January, for example,
-use the '-n 7' option. This makes June 30 the end-of-year backup rather
-than 31 December. The June label would then be 'jun_2010'.
+If the new year begins in July rather than January, for example, use the '-n 7' option.
+This makes June 30 the end-of-year backup rather than December 31. The June label would
+then be 'jun_2023'.
 
-If you prefer a different day than friday for these week-at-a-time backups
-then edit the WEEKLY_DAY value to represent a different day of the week.
+If you prefer a different day than Friday for these week-end backups there is no
+command line option. You need to edit the baklabel code and change WEEKLY_DAY to
+represent a different day of the week. Use the Python number of the day-of-week.
 
-If you want to live dangerously you could make WEEKLY_DAY greater than or
-equal to 7 and skip saving week-at-a-time backups. Not recommended.
+To defeat week-end backups altogether and make Friday just another day, make WEEKLY_DAY
+greater than or equal to 7. Skipping week-end backups would not be recommended by most
+grandfathers!
 
 {2}
 
 
-License
-=======
-Copyright (c) 2023 Climate Pty Ltd
+MIT License
+===========
+Copyright (c) 2010-2023 Climate Pty Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -163,7 +164,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-""".format(longdesc, longerdesc, source)
+""".format(longdesc, longerdesc, repo)
 
 __doc__ = relnote
 
@@ -171,9 +172,8 @@ import argparse
 from datetime import date, datetime
 
 # All upper-case words below from SERVER_PREFIX to SMALLHOURS are intended as
-# program constants. They are actually default values and may be edited at
-# your convenience after a particular installation. Once edited they should
-# be regarded as constants where they appear in the ensuing code.
+# program constants. They are default values and may be edited at your peril
+# should you upgrade baklabel in future.
 
 # prefix all backup labels - perhaps the name of the server being backed up
 SERVER_PREFIX = ''
@@ -186,7 +186,7 @@ NEW_YEAR_MONTH = 1
 EOY_LABEL = ''
 
 # append the year to the end-of-year backup name?
-# True returns 'dec_2010' on 31/12/2010, False returns just 'dec'
+# True returns 'dec_2023' on 31/12/2023, False returns just 'dec'
 APPEND_YEAR_TO_EOY_LABEL = True
 
 # True saves end-of-month backups forever, False overwites them each year
@@ -203,20 +203,26 @@ SMALLHOURS = 4
 
 
 def detect_system_date_format():
+    """ Ambiguous dates entered on the command line need to be resolved """
+
     import locale
     system_locale = locale.getlocale()
     if system_locale[0]:
-        example_date = datetime(2023, 5, 29)  # Example date today will suffice
-        locale.setlocale(locale.LC_TIME, system_locale)  # Set the locale explicitly
-        formatted_date = example_date.strftime("%x")  # Get formatted date
-        system_date_format = formatted_date.replace(
+        # Eg., ('Australia', 'utf-8')
+        # Example date today will suffice
+        example_date = datetime(2023, 5, 29)
+        # Set the locale explicitly
+        locale.setlocale(locale.LC_TIME, system_locale)
+        # Get formatted date
+        formatted_date = example_date.strftime("%x")
+        # Replace the known example values so we can disambiguate
+        return formatted_date.replace(
             "2023", "YYYY"
         ).replace(
             "05", "MM"
         ).replace(
             "29", "DD"
         )
-        return system_date_format
     else:
         # Only if no locale is set - possibly needs "MM-DD-YY" but not tested
         return "YYYY-MM-DD"  # Default date format if detection fails
@@ -255,6 +261,11 @@ def guessdate(dstr, line=None):
         return date(ye, mo, da)
     else:
         raise ValueError('Invalid date format')
+
+
+def readme():
+    return f"{longdesc}\n{longerdesc}\n{repo}\n"
+
 
 class Grandad:
 
@@ -320,7 +331,6 @@ Options:
         weekly_day=WEEKLY_DAY,
         smallhours=SMALLHOURS,
     ):
-
         # increment = -1 means yesterday so hard-code 0 to begin with
         self.increment = 0
         # smallhours = 3 means use yesterday only until 3am - don't care about DST
