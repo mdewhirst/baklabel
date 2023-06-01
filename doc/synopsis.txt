@@ -1,20 +1,23 @@
 
 Synopsis
 ========
-Baklabel is intended for use in automated scripts to deliver a sensible
-directory path fragment (or label) each day to construct a grandfathered
-local backup destination. It can also be run as a stand-alone utility to
-find the backup label produced for any given date and set of options.
+Baklabel is intended for use in automated scripts to deliver a sensible directory path
+fragment (or label) each day to construct a grandfathered local backup.
 
-Run  baklabel.py -h  to see command line usage options.
+Import baklabel.Grandad to produce today's label fragment.
 
-Call baklabel directly or import it and produce labels from your code.
+See test_baklabel.py for examples of how to call Grandad
 
-Python 2.7 and 3.x
+It is also a stand-alone utility to find the backup label produced for any given date
+and set of options.
 
-In the docs directory after installing, see release_note.txt for more
-detail on the package, instructions.txt for baklabel output examples and
-backup_howto.txt for a complete example backup script for Windows.
+python3 baklabel.py -h  to see command line usage and options.
+
+Python 3.x (Python 2.7 should also work but is no longer tested)
+
+In the doc directory of the baklabel repo, see release_note.txt for more detail on the
+package, examples.txt for baklabel output examples and backup_howto.txt for a sample
+backup script for Windows.
 
 Usage:
     baklabel.py [Options]
