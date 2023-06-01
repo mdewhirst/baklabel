@@ -44,6 +44,8 @@ relnote = """baklabel - see Description below
 Version    Who  When/What
 =========================
 
+ver 1.2.3   md  1 Jun 2023 - Repair missing -- for --weekly-day option (-w)
+
 ver 1.2.2   md  1 Jun 2023 - Further clean up documentation
 
 ver 1.2.1   md  30 May 2023 - Clean up documentation
@@ -69,12 +71,12 @@ ver 0.2.0   md  27 Oct 2010 - Help now respects defaults which have been adjuste
                 the source code. A new default now permits adjustment of new_year_month
                 which sets the end-of-year label to any desired month.
 
-ver 0.1.0b   md 8 Oct 2010 - Added -d numeric option for setting the label to x days
+ver 0.1.0b  md  8 Oct 2010 - Added -d numeric option for setting the label to x days
                 ago. Eg., -1 = yesterday. Also added a time trigger option in the -d
                 switch such that, for example, -d 3am will produce yesterday's label
                 if baklabel is called prior to 3am
 
-ver 0.0.0a   md 1 Jul 2010 - first written
+ver 0.0.0a  md  1 Jul 2010 - first written
 
 
 Description
@@ -131,13 +133,11 @@ If the new year begins in July rather than January, for example, use the '-n 7' 
 This makes June 30 the end-of-year backup rather than December 31. The June label would
 then be 'jun_2023'.
 
-If you prefer a different day than Friday for these week-end backups there is no
-command line option. You need to edit the baklabel code and change WEEKLY_DAY to
-represent a different day of the week. Use the Python number of the day-of-week.
+If you prefer a different day than Friday for these week-end backups the command line
+option is -w. Use the Python number of the day-of-week: 0 is Monday and Friday is 4.
 
-To defeat week-end backups altogether and make Friday just another day, make WEEKLY_DAY
-greater than or equal to 7. Skipping week-end backups would not be recommended by most
-grandfathers!
+To defeat week-end backups altogether and make Friday just another day, use -w 7.
+Skipping week-end backups would not be recommended by most grandfathers!
 
 {2}
 
@@ -587,7 +587,7 @@ if __name__ == "__main__":
             print(f'{err}')
             ok = False
 
-    if ('-w' in args) or ('weekly-day' in args):
+    if ('-w' in args) or ('--weekly-day' in args):
         try:
             weekly_day = int(args[args.index('-w') + 1])
         except Exception as err:
