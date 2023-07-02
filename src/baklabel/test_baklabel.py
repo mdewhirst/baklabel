@@ -413,6 +413,14 @@ class TestBaklabel(unittest.TestCase):
         result = tsto.label()
         self.assertEqual(result, expected)
 
+    def test_al_bday_mon(self):
+        """ 25 """
+        dday = date(1960, 5, 23)
+        expected = 'mon'
+        tsto = Grandad(dday)
+        result = tsto.label()
+        self.assertEqual(result, expected)
+
     def test_force_no_weekly_day_next_thu(self):
         """ 24 """
         dday = date(2040, 3, 8)
@@ -678,6 +686,11 @@ class TestGuessdate(unittest.TestCase):
         dlst = 5, 6, 2023
         dstr = "-".join(str(item) for item in dlst)
         self.assertEqual(str(guessdate(dstr)), '2023-06-05')
+
+    def test_al_bday(self):
+        dlst = 23, 5, 1960
+        dstr = "-".join(str(item) for item in dlst)
+        self.assertEqual(str(guessdate(dstr)), '1960-05-23')
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
